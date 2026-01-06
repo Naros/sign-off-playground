@@ -1,8 +1,8 @@
-name: Check DCO
-description: Check Developer Certificate of Origin sign-offs on commits
+name: "Check DCO"
+description: "Check Developer Certificate of Origin sign-offs on commits"
 
 runs:
-  using: composite
+  using: "composite"
   steps:
     - name: Check sign-off
       uses: KineticCafe/actions-dco@v1
