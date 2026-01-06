@@ -30,7 +30,7 @@ runs:
             owner: context.repo.owner,
             repo: context.repo.repo,
           });
-          for (Const comment of comments.data) {
+          for (const comment of comments.data) {
             if (comment.body.includes ('(DCO) check failed.')) {
               await github.rest.issues.deleteComment({
                 owner: context.repo.owner,
