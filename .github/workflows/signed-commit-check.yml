@@ -32,7 +32,7 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: ':x: DCO check failed.\n\nPlease sign off all commits with:\n```\ngit commit -s\n```\nIf commits are not properly signed off, the pull request cannot be merged.'
+              body: ':x: DCO check failed.\n\nPlease sign off all commits with:\n```\ngit commit -s\n```\nIf pull request commits are not signed off, the pull request cannot be merged.'
             })
 
 
