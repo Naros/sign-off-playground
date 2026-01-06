@@ -8,8 +8,8 @@ jobs:
   check-signed_commits:
     name: Check signed commits
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
+    env:
+      FORCE_COLOR: 1
     steps:
       - name: Check sign-off
-        uses: 1Password/check-signed-commits-action@v1
+        uses: live627/check-pr-signoff-action@v1

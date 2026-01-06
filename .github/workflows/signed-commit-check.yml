@@ -8,12 +8,12 @@ jobs:
   check:
     name: Signed commits check
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      pull-requests: write
-
+    env:
+      FORCE_COLOR: 1
     steps:
       - name: Commit Check
-        uses: 1Password/check-signed-commits-action@v1
+        uses: live627/check-pr-signoff-action@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
 
