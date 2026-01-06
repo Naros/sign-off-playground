@@ -23,7 +23,7 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: ':x: DCO check failed.\n\nHi @${{ github.event.pull_request.user.login }}, please sign off all commits with:\n```\ngit commit -s\n```\nIf pull request commits are not signed off, the pull request cannot be merged. For more information about why this is required, please see https://debezium.io/blog/2025/12/12/contribution-requirements-changing/[our blog] about contribution requirement changes.'
+              body: ':x: DCO check failed.\n\nHi @${{ github.event.pull_request.user.login }}, please sign off all commits with:\n```\ngit commit -s\n```\nIf pull request commits are not signed off, the pull request cannot be merged. For more information about why this is required, please see [our blog](https://debezium.io/blog/2025/12/12/contribution-requirements-changing/) about contribution requirement changes.'
             })
 
   file_changes:
