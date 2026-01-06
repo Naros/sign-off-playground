@@ -12,4 +12,4 @@ jobs:
       FORCE_COLOR: 1
     steps:
       - name: Check sign-off
-        uses: live627/check-pr-signoff-action@v1
+        uses: KineticCafe/actions-dco@v1
