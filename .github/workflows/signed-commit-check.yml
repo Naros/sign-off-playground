@@ -1,0 +1,19 @@
+name: Commit Check
+on:
+  pull_request_target:
+    branches:
+      - main
+
+jobs:
+  check:
+    name: Signed commits check
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+
+    steps:
+      - name: Commit Check
+        uses: 1Password/check-signed-commits-action@v1
+
+

@@ -1,0 +1,15 @@
+name: GHA
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  check-signed_commits:
+    name: Check signed commits
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Check sign-off
+        uses: 1Password/check-signed-commits-action@v1
