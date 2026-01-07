@@ -14,22 +14,12 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Get Labels
-      id: pr-labels
-      shell: bash
-      run: |
-        if [ "${{ github.event_name }}" = "pull_request_target" ]; then
-          echo "LABELS=${{ toJson(github.event.pull_request_target.labels.*.names) }}"
-        else
-          echo "LABELS=${{ toJson(github.event.pull_request.labels.*.names) }}"
-        fi
-        echo "names=$LABELS" >> $GITHUB_OUTPUT
     - name: Check sign-off
-      if: "!contains(fromJson(steps.pr-labels.outputs.names), inputs.skip-level)"
+      if: ${{ github.event.label.name != inputs.skip-level }}
       uses: KineticCafe/actions-dco@v1
 
     - name: Commit if DCO failed
-      if: failure() && inputs.add-comments == 'true' && !contains(fromJson(steps.pr-labels.outputs.names), inputs.skip-level)
+      if: failure() && inputs.add-comments == 'true' && github.event.label.name != inputs.skip-level
       uses: actions/github-script@v7
       with:
         script: |
@@ -42,7 +32,7 @@ runs:
 
     # Remove all DCO comments once DCO check passes
     - name: Cleanup DCO comments
-      if: success() && inputs.add-comments == 'true' && !contains(fromJson(steps.pr-labels.outputs.names), inputs.skip-level)
+      if: success() && inputs.add-comments == 'true' && github.event.label.name != inputs.skip-level
       uses: actions/github-script@v7
       with:
         script: |
