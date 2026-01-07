@@ -20,7 +20,7 @@ runs:
         echo "${{ toJSON(github.event) }}"
 
     - name: Check sign-off
-      if: ${{ !contains(github.event.pull_request.labels.*.name, inputs.skip-level) }}
+      if: ${{ !contains(github.event.pull_request.labels.*.name, inputs.skip-label) }}
       uses: KineticCafe/actions-dco@v1
 
 #    - name: Commit if DCO failed
