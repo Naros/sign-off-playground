@@ -17,7 +17,7 @@ runs:
     - name: test
       shell: bash
       run: |
-        echo "${{ github.event.label }}"
+        echo "${{ toJSON(github.event) }}"
 
     - name: Check sign-off
       if: ${{ github.event.label.name != inputs.skip-level }}
