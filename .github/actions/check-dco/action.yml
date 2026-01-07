@@ -14,6 +14,11 @@ inputs:
 runs:
   using: "composite"
   steps:
+    - name: test
+      shell: bash
+      run: |
+        echo "${{ github.event.label }}"
+
     - name: Check sign-off
       if: ${{ github.event.label.name != inputs.skip-level }}
       uses: KineticCafe/actions-dco@v1
