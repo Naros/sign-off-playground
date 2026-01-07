@@ -1,14 +1,35 @@
 name: "Check DCO"
 description: "Check Developer Certificate of Origin sign-offs on commits"
 
+inputs:
+  add-comments:
+    description: "Whether to add comments to the pull request"
+    required: false
+    default: "false"
+  skip-label:
+    description: "Label that triggers skipping the DCO check"
+    required: false
+    default: "admin/skip-dco-check"
+
 runs:
   using: "composite"
   steps:
+    - name: Get Labels
+      id: pr-labels
+      shell: bash
+      run: |
+        if [ "${{ github.event_name }}" = "pull_request_target" ]; then
+          echo "LABELS=${{ toJson(github.event.pull_request_target.labels.*.names) }}"
+        else
+          echo "LABELS=${{ toJson(github.event.pull_request.labels.*.names) }}"
+        fi
+        echo "names=$LABELS" >> $GITHUB_OUTPUT
     - name: Check sign-off
+      if: "!contains(fromJson(steps.pr-labels.outputs.names), inputs.skip-level)"
       uses: KineticCafe/actions-dco@v1
 
     - name: Commit if DCO failed
-      if: failure()
+      if: failure() && inputs.add-comments == 'true' && !contains(fromJson(steps.pr-labels.outputs.names), inputs.skip-level)
       uses: actions/github-script@v7
       with:
         script: |
@@ -21,7 +42,7 @@ runs:
 
     # Remove all DCO comments once DCO check passes
     - name: Cleanup DCO comments
-      if: success()
+      if: success() && inputs.add-comments == 'true' && !contains(fromJson(steps.pr-labels.outputs.names), inputs.skip-level)
       uses: actions/github-script@v7
       with:
         script: |
@@ -31,7 +52,7 @@ runs:
             repo: context.repo.repo,
           });
           for (const comment of comments.data) {
-            if (comment.body.includes ('(DCO) check failed.')) {
+            if (comment.body.includes ('(DCO) check failed.') && comment.user.login === 'github-actions[bot]') {
               await github.rest.issues.deleteComment({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
