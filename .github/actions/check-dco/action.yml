@@ -17,7 +17,9 @@ runs:
     - name: test
       shell: bash
       run: |
-        echo "${{ toJSON(github.event) }}"
+        cat << 'EOF'
+        ${{ toJSON(github.event) }}
+        EOF
 
     - name: Check sign-off
       if: ${{ !contains(github.event.pull_request.labels.*.name, inputs.skip-label) }}
